@@ -43,4 +43,5 @@ public class LexerHelper {
 		}
 		return -1;
 	}
+	
 }

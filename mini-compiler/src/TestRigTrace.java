@@ -1,8 +1,4 @@
-/**
- * Invokes the ANTLR TesRig tool to trace how the parser analyzes the input program.
- * 
- * @author  Francisco Ortin
- */
+
 
 public class TestRigTrace {
 	

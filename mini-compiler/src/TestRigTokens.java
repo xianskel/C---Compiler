@@ -1,8 +1,4 @@
-/**
- * Invokes the ANTLR TesRig tool to show the tokens in the input program.
- * 
- * @author  Francisco Ortin
- */
+
 
 public class TestRigTokens {
 	

@@ -1,9 +1,3 @@
-/**
- * Default implementation for binary expressions.
- * 
- * @author  Francisco Ortin
- */
-
 package ast;
 
 abstract class AbstractBinaryExpression extends AbstractExpression implements Expression {

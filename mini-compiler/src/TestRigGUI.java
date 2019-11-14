@@ -1,8 +1,3 @@
-/**
- * Invokes the ANTLR TesRig tool to show the parse tree of the input program.
- * 
- * @author  Francisco Ortin
- */
 
 
 public class TestRigGUI {

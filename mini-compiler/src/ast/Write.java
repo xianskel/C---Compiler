@@ -1,38 +1,22 @@
-/**
-  * AST node for write statements.
-  * 
-  * @author  Francisco Ortin
-  */
-
 package ast;
 
-
-import visitor.Visitor;
+import java.util.List;
 
 public class Write extends AbstractASTNode implements Statement {
 
-	/**
-	 * Expression to be written
-	 */
-	private Expression expression;
+	private List<Expression> expressions;
+	
+	public Write(int line, int column, List<Expression> expressions) {
+		super(line, column);
+		this.expressions = expressions;
+	}
 
-	public Expression getExpression() {
-		return expression;
+	public List<Expression> getExpressions() {
+		return expressions;
 	}
 	
 	@Override
 	public String toString() {
-		return "write " + expression;
+		return "write " + expressions;
 	}
-
-	public Write(int line, int column, Expression expression) {
-		super(line, column);
-		this.expression = expression;
-	}
-
-	@Override
-	public <TP, TR> TR accept(Visitor<TP, TR> visitor, TP param) {
-		return visitor.visit(this,param);
-	}
-	
 }
