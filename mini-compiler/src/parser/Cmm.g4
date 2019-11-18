@@ -16,7 +16,7 @@ program returns [Program ast]:
 	;      
 
 definitions returns [List<Definition> ast = new ArrayList<Definition>()]:
-	(  funcDefinition		{ $ast.add($funcDefinition.ast); }
+	(  funcDefinition	   { $ast.add($funcDefinition.ast); }
 	 | varDefinition       { $ast.addAll($varDefinition.ast); }
 	 | typeDefinition      { $ast.add($typeDefinition.ast); }
 	)*
@@ -90,24 +90,28 @@ recordFields returns [List<RecordField> ast = new ArrayList<RecordField>()]:
 	;
 
 statements returns [List<Statement> ast = new ArrayList<Statement>()]:
-	(statement ';' { $ast.add($statement.ast); })*
+	(statement ';' { $ast.addAll($statement.ast); })*
 	;
 		  	
-statement returns [Statement ast]: 
-	  e1=expression '=' e2=expression  		{ $ast = new Assignment($e1.start.getLine(), $e1.start.getCharPositionInLine()+1, $e1.ast, $e2.ast); }
-	| 'return' e1=expression				{ $ast = new Return($expression.start.getLine(), $expression.start.getCharPositionInLine()+1, $expression.ast); }
-	| 'read'  expressionList				{ $ast = new Read($expressionList.start.getLine(), $expressionList.start.getCharPositionInLine()+1, $expressionList.ast); }
-	| 'write' expressionList				{ $ast = new Write($expressionList.start.getLine(), $expressionList.start.getCharPositionInLine()+1, $expressionList.ast); }
-	| 'while' expression statementBlock		{ $ast = new While($expression.start.getLine(), $expression.start.getCharPositionInLine()+1, $expression.ast, $statementBlock.ast); }
-	| 'if' expression statementBlock        { $ast = new IfElse($expression.start.getLine(), $expression.start.getCharPositionInLine()+1, $expression.ast, $statementBlock.ast, new ArrayList<Statement>()); }
+statement returns [List<Statement> ast = new ArrayList<Statement>()]: 
+	  e1=expression '=' e2=expression  		{ $ast.add(new Assignment($e1.start.getLine(), $e1.start.getCharPositionInLine()+1, $e1.ast, $e2.ast)); }
+	| 'return' e1=expression				{ $ast.add(new Return($expression.start.getLine(), $expression.start.getCharPositionInLine()+1, $expression.ast)); }
+	| 'read'  expressionList				{ for(Expression expression: $expressionList.ast) 
+													$ast.add(new Read($expressionList.start.getLine(), $expressionList.start.getCharPositionInLine()+1, expression)); 
+											}
+	| 'write' expressionList				{ for(Expression expression: $expressionList.ast) 
+													$ast.add(new Write($expressionList.start.getLine(), $expressionList.start.getCharPositionInLine()+1, expression)); 
+											}
+	| 'while' expression statementBlock		{ $ast.add(new While($expression.start.getLine(), $expression.start.getCharPositionInLine()+1, $expression.ast, $statementBlock.ast)); }
+	| 'if' expression statementBlock        { $ast.add(new IfElse($expression.start.getLine(), $expression.start.getCharPositionInLine()+1, $expression.ast, $statementBlock.ast, new ArrayList<Statement>())); }
 	| 'if' expression s1=statementBlock 
-	  'else' s2=statementBlock				{ $ast = new IfElse($expression.start.getLine(), $expression.start.getCharPositionInLine()+1, $expression.ast, $s1.ast, $s2.ast); }
-	| ID '(' expressionList ')' 			{ $ast = new FuncInvocation($ID.getLine(), $ID.getCharPositionInLine()+1, $ID.text, $expressionList.ast); }
+	  'else' s2=statementBlock				{ $ast.add(new IfElse($expression.start.getLine(), $expression.start.getCharPositionInLine()+1, $expression.ast, $s1.ast, $s2.ast)); }
+	| ID '(' expressionList ')' 			{ $ast.add(new FuncInvocation($ID.getLine(), $ID.getCharPositionInLine()+1, $ID.text, $expressionList.ast)); }
 ;
 		 
 statementBlock returns [List<Statement> ast = new ArrayList<Statement>()]:
 	'{' statements '}' { $ast = $statements.ast; }
-	| statement	 { $ast.add($statement.ast); }
+	| statement	 { $ast.addAll($statement.ast); }
 	;
 	
 expressionList returns [List<Expression> ast = new ArrayList<Expression>()]:

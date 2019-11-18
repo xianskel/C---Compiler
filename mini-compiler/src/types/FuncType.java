@@ -3,6 +3,7 @@ package types;
 import java.util.List;
 
 import ast.VarDefinition;
+import visitor.Visitor;
 
 public class FuncType extends AbstractType {
 	
@@ -26,6 +27,11 @@ public class FuncType extends AbstractType {
 	@Override
 	public String toString() {
 		return "Returns "+this.returnType+" from "+varDefinitions.toString();
+	}
+	
+	@Override
+	public <TP, TR> TR accept(Visitor<TP, TR> visitor, TP param) {
+		return visitor.visit(this,param);
 	}
 
 }

@@ -3,6 +3,7 @@ package ast;
 import java.util.List;
 
 import types.FuncType;
+import visitor.Visitor;
 
 public class FuncDefinition extends AbstractASTNode implements Definition {
 
@@ -39,5 +40,10 @@ public class FuncDefinition extends AbstractASTNode implements Definition {
 	@Override
 	public String toString() {
 		return "Function "+this.name+" of type "+type.toString();
+	}
+	
+	@Override
+	public <TP, TR> TR accept(Visitor<TP, TR> visitor, TP param) {
+		return visitor.visit(this, param);
 	}
 }

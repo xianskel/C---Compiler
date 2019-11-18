@@ -6,3 +6,6 @@
 /ast/
 /parser/
 /types/
+/visitor/
+/semantic/
+/errorhandler/

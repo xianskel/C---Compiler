@@ -1,6 +1,7 @@
 package ast;
 
 import types.Type;
+import visitor.Visitor;
 
 public class TypeDefinition extends AbstractASTNode implements Definition {
 	
@@ -24,6 +25,11 @@ public class TypeDefinition extends AbstractASTNode implements Definition {
 	@Override
 	public String toString() {
 		return "Type "+this.name+" of type "+type;
+	}
+	
+	@Override
+	public <TP, TR> TR accept(Visitor<TP, TR> visitor, TP param) {
+		return visitor.visit(this, param);
 	}
 
 }

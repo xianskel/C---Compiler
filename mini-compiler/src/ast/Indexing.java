@@ -1,5 +1,7 @@
 package ast;
 
+import visitor.Visitor;
+
 public class Indexing extends AbstractExpression {
 	
 	private Expression expression;
@@ -22,5 +24,10 @@ public class Indexing extends AbstractExpression {
 	@Override
 	public String toString() {
 		return "Array of "+this.expression+"["+expression2+"]";
+	}
+	
+	@Override
+	public <TP, TR> TR accept(Visitor<TP, TR> visitor, TP param) {
+		return visitor.visit(this, param);
 	}
 }

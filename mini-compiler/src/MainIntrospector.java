@@ -3,7 +3,9 @@ import org.antlr.v4.runtime.*;
 import introspector.model.IntrospectorModel;
 import introspector.view.IntrospectorTree;
 import parser.*;
+import semantic.TypeCheckingVisitor;
 import ast.Program;
+import errorhandler.ErrorHandler;
 
 
 public class MainIntrospector {
@@ -26,6 +28,13 @@ public class MainIntrospector {
 		if (parser.getNumberOfSyntaxErrors() >0) {
 			System.err.println("Program with syntax errors. No code was generated.");
 			return;
+		}
+		
+		ast.accept(new TypeCheckingVisitor(),null);
+		
+		if (ErrorHandler.getErrorHandler().anyError()) {
+			ErrorHandler.getErrorHandler().showErrors(System.err);
+			System.err.println("Program with semantic errors. No code was generated.");
 		}
 		
 	

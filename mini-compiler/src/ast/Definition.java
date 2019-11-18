@@ -2,10 +2,10 @@ package ast;
 
 import types.Type;
 
-public interface Definition {
+public interface Definition extends ASTNode {
 	
 	public Type getType();
 	
 	public String getName(); 
-
+	
 }

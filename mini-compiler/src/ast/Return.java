@@ -1,5 +1,7 @@
 package ast;
 
+import visitor.Visitor;
+
 public class Return extends AbstractASTNode implements Statement {
 
 	private Expression expression;
@@ -16,5 +18,10 @@ public class Return extends AbstractASTNode implements Statement {
 	@Override
 	public String toString() {
 		return "return " + expression;
+	}
+	
+	@Override
+	public <TP, TR> TR accept(Visitor<TP, TR> visitor, TP param) {
+		return visitor.visit(this, param);
 	}
 }

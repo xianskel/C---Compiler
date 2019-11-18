@@ -1,25 +1,4 @@
-int a, b, c;
 
-typedef int integer_type;
-
-typedef struct {
-	int day, month, year;
-} date_type;
-
-type date_type[10] dates; 
-
-typedef struct {
-	int age;
-	type date_type dateOfBirth; 
-	char[256] name, surname;
-} person_type;
-
-type person_type[10] students;
-
-typedef int integer_type;
-typedef type integer_type[10] Vector;
-
-int[8][3] fibonacci;
 
 void p() {
 	date_type.day = 1;

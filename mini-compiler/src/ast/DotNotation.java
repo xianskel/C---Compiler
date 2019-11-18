@@ -1,26 +1,15 @@
 package ast;
 
-public class DotNotation extends AbstractExpression {
-	
-	private Expression expression;
-	private Expression expression2;
+import visitor.Visitor;
 
-	public DotNotation(int line, int column, Expression expression, Expression expression2) {
-		super(line, column);
-		this.expression = expression;
-		this.expression2 = expression2;
-	}
+public class DotNotation extends AbstractBinaryExpression {
 
-	public Expression getExpression() {
-		return expression;
-	}
-	
-	public Expression getExpression2() {
-		return expression2;
+	public DotNotation(int line, int column, Expression expression1, Expression expression2) {
+		super(line, column, expression1, ".", expression2);
 	}
 
 	@Override
-	public String toString() {
-		return "Access to of "+this.expression+"."+expression2;
+	public <TP, TR> TR accept(Visitor<TP, TR> visitor, TP param) {
+		return visitor.visit(this, param);
 	}
 }

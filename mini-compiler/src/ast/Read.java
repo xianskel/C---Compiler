@@ -1,22 +1,27 @@
 package ast;
 
-import java.util.List;
+import visitor.Visitor;
 
 public class Read extends AbstractASTNode implements Statement {
 
-private List<Expression> expressions;
+private Expression expression;
 	
-	public Read(int line, int column, List<Expression> expressions) {
+	public Read(int line, int column, Expression expression) {
 		super(line, column);
-		this.expressions = expressions;
+		this.expression = expression;
 	}
 
-	public List<Expression> getExpressions() {
-		return expressions;
+	public Expression getExpression() {
+		return expression;
 	}
 	
 	@Override
 	public String toString() {
-		return "Read " + expressions;
+		return "Read " + expression;
+	}
+	
+	@Override
+	public <TP, TR> TR accept(Visitor<TP, TR> visitor, TP param) {
+		return visitor.visit(this, param);
 	}
 }
