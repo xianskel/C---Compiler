@@ -9,6 +9,7 @@ public class FuncDefinition extends AbstractASTNode implements Definition {
 
 	private FuncType type;
 	private String name;
+	private int scope;
 	private List<VarDefinition> varDefinitions;
 	private List<Statement> statements;
 
@@ -45,5 +46,14 @@ public class FuncDefinition extends AbstractASTNode implements Definition {
 	@Override
 	public <TP, TR> TR accept(Visitor<TP, TR> visitor, TP param) {
 		return visitor.visit(this, param);
+	}
+
+	@Override
+	public int getScope() {
+		return scope;
+	}
+	
+	public void setScope(int scope) {
+		this.scope = scope;
 	}
 }

@@ -1,0 +1,22 @@
+int integer;
+char character;
+double real;
+int integer;  // * Error: integer already defined
+
+int f(int a, int b) {
+  int a;      // * Error: a is already defined
+  return a;
+}
+
+void g(int b, double b) { // * Error: b is already defined
+}
+
+void g() {	// * Error: g is already defined
+}
+
+void main() {
+  double character;
+  read integer;
+  read i;      // * Error: i is not defined
+  h(); 		   // * Error: h is not defined
+}

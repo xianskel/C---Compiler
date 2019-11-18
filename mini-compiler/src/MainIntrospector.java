@@ -3,6 +3,7 @@ import org.antlr.v4.runtime.*;
 import introspector.model.IntrospectorModel;
 import introspector.view.IntrospectorTree;
 import parser.*;
+import semantic.IdentificationVisitor;
 import semantic.TypeCheckingVisitor;
 import ast.Program;
 import errorhandler.ErrorHandler;
@@ -30,7 +31,9 @@ public class MainIntrospector {
 			return;
 		}
 		
-		ast.accept(new TypeCheckingVisitor(),null);
+		ast.accept(new TypeCheckingVisitor(), null);
+		ast.accept(new IdentificationVisitor(), null);
+
 		
 		if (ErrorHandler.getErrorHandler().anyError()) {
 			ErrorHandler.getErrorHandler().showErrors(System.err);

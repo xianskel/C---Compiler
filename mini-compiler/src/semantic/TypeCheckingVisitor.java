@@ -13,7 +13,7 @@ public class TypeCheckingVisitor extends AbstractVisitor<Void, Void> {
 		assignment.setlValue(assignment.getLeftHandSide().getlValue());
 		if (!assignment.getlValue()) 
 			new ErrorType("The identifier " + assignment.getLeftHandSide().toString()
-					+ " is not a valid left value", assignment);
+					+ " is not valid", assignment);
 		return null;
 	}
 
@@ -107,7 +107,6 @@ public class TypeCheckingVisitor extends AbstractVisitor<Void, Void> {
 		return null;
 	}
 
-	@Override
 	public Void visit(TypeDefinition typeDef, Void param) {
 		typeDef.setlValue(false);
 		return null;
@@ -118,14 +117,22 @@ public class TypeCheckingVisitor extends AbstractVisitor<Void, Void> {
 		write.setlValue(false);
 		return null;
 	}
-
+	
 	@Override
+	public Void visit(Read read, Void param) {
+		read.getExpression().accept(this, null);
+		read.setlValue(read.getExpression().getlValue());
+		if (!read.getlValue()) 
+			new ErrorType("The identifier " + read.getExpression().toString()
+					+ " is not valid", read);
+		return null;
+	}
+
 	public Void visit(VarDefinition varDefinition, Void param) {
 		varDefinition.setlValue(true);
 		return null;
 	}
 
-	@Override
 	public Void visit(FuncDefinition funcDefinition, Void param) {
 		for(VarDefinition varDefinition: funcDefinition.getVarDefinitions())
 			varDefinition.accept(this, param);

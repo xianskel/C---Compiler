@@ -42,7 +42,7 @@ idList returns [List<String> ast = new ArrayList<String>()]:
 	;	
 
 funcDefinition returns [FuncDefinition ast]:
-	returnType id1=ID '(' typedIdList ')' '{' varDefinitions statements '}' ';' 	
+	returnType id1=ID '(' typedIdList ')' '{' varDefinitions statements '}'	
 		{ 
 			FuncType type = new FuncType($returnType.ast, $typedIdList.ast);
 			$ast = new FuncDefinition($id1.getLine(), $id1.getCharPositionInLine()+1, 
@@ -51,7 +51,7 @@ funcDefinition returns [FuncDefinition ast]:
     ;
     
 mainDefinition returns [FuncDefinition ast]:
-	'void' 'main' '(' ')' '{' varDefinitions statements '}' ';'	
+	'void' 'main' '(' ')' '{' varDefinitions statements '}'
 		{ 
 			FuncType type = new FuncType(VoidType.getInstance(), new ArrayList());
 			$ast = new FuncDefinition($varDefinitions.start.getLine(), $varDefinitions.start.getCharPositionInLine()+1, 

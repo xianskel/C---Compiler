@@ -8,6 +8,7 @@ public class FuncInvocation extends AbstractExpression implements Statement {
 
 	private String name;
 	private List<Expression> params;
+	private Definition definition;
 
 	public FuncInvocation(int line, int column, String name, List<Expression> params) {
 		super(line, column);
@@ -31,5 +32,13 @@ public class FuncInvocation extends AbstractExpression implements Statement {
 	@Override
 	public <TP, TR> TR accept(Visitor<TP, TR> visitor, TP param) {
 		return visitor.visit(this, param);
+	}
+	
+	public Definition getDefinition() {
+		return definition;
+	}
+
+	public void setDefinition(Definition definition) {
+		this.definition = definition;
 	}
 }

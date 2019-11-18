@@ -7,7 +7,7 @@ public class VarDefinition extends AbstractASTNode implements Definition {
 
 	private Type type;
 	private String name;
-
+	private int scope;
 	
 	public VarDefinition(int line, int column, String name, Type type) {
 		super(line, column);
@@ -31,5 +31,14 @@ public class VarDefinition extends AbstractASTNode implements Definition {
 	@Override
 	public <TP, TR> TR accept(Visitor<TP, TR> visitor, TP param) {
 		return visitor.visit(this, param);
+	}
+	
+	@Override
+	public int getScope() {
+		return scope;
+	}
+	
+	public void setScope(int scope) {
+		this.scope = scope;
 	}
 }
