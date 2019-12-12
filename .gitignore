@@ -1,3 +1,6 @@
+.settings/
+bin/
+
 input*.txt
 CmmLexer.java
 Cmm.tokens
