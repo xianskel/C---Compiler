@@ -6,25 +6,25 @@ import visitor.Visitor;
 public class Cast extends AbstractExpression {
 
 	private Expression expression;
-	private Type type;
+	private Type castType;
 
 	public Cast(int line, int column, Type type, Expression expression) {
 		super(line, column);
 		this.expression = expression;
-		this.type = type;
+		this.castType = type;
 	}
 
 	@Override
 	public String toString() {
-		return "cast " + this.expression + " to " + this.type;
+		return "cast " + this.expression + " to " + this.castType;
 	}
 	
 	public Expression getExpression() {
 		return expression;
 	}
 	
-	public Type getType() {
-		return type;
+	public Type getCastType() {
+		return castType;
 	}
 
 	@Override

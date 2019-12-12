@@ -15,6 +15,7 @@ public class AbstractVisitor<TP, TR> implements Visitor<TP, TR> {
 
 	@Override
 	public TR visit(Variable variable, TP param) {
+		
 		return null;
 	}
 
@@ -85,13 +86,15 @@ public class AbstractVisitor<TP, TR> implements Visitor<TP, TR> {
 
 	@Override
 	public TR visit(Comparison comparison, TP param) {
-		// TODO Auto-generated method stub
+		comparison.getOperand1().accept(this, param);
+		comparison.getOperand2().accept(this, param);
 		return null;
 	}
 
 	@Override
-	public TR visit(DotNotation dotNotation, TP param) {
-		// TODO Auto-generated method stub
+	public TR visit(DotNotation dot, TP param) {
+		dot.getOperand1().accept(this, null);
+		dot.getOperand2().accept(this, null);
 		return null;
 	}
 
@@ -103,13 +106,15 @@ public class AbstractVisitor<TP, TR> implements Visitor<TP, TR> {
 
 	@Override
 	public TR visit(Indexing indexing, TP param) {
-		// TODO Auto-generated method stub
+		indexing.getExpression().accept(this, null);
+		indexing.getExpression2().accept(this, null);
 		return null;
 	}
 
 	@Override
 	public TR visit(Logical logical, TP param) {
-		// TODO Auto-generated method stub
+		logical.getOperand1().accept(this, param);
+		logical.getOperand2().accept(this, param);
 		return null;
 	}
 
@@ -121,13 +126,13 @@ public class AbstractVisitor<TP, TR> implements Visitor<TP, TR> {
 
 	@Override
 	public TR visit(UnaryMinus unaryMinus, TP param) {
-		// TODO Auto-generated method stub
+		unaryMinus.getOperand().accept(this, null);
 		return null;
 	}
 
 	@Override
 	public TR visit(UnaryNot unaryNot, TP param) {
-		// TODO Auto-generated method stub
+		unaryNot.getOperand().accept(this, null);
 		return null;
 	}
 
@@ -145,7 +150,11 @@ public class AbstractVisitor<TP, TR> implements Visitor<TP, TR> {
 
 	@Override
 	public TR visit(IfElse ifElse, TP param) {
-		// TODO Auto-generated method stub
+		ifElse.getExpression().accept(this, param);
+		for(Statement statement: ifElse.getIfStatements())
+			statement.accept(this, param);
+		for(Statement statement: ifElse.getElseStatements())
+			statement.accept(this, param);
 		return null;
 	}
 
@@ -157,13 +166,13 @@ public class AbstractVisitor<TP, TR> implements Visitor<TP, TR> {
 
 	@Override
 	public TR visit(Return rStatement, TP param) {
-		// TODO Auto-generated method stub
+		rStatement.getExpression().accept(this, param);
 		return null;
 	}
 
 	@Override
 	public TR visit(While wStatement, TP param) {
-		// TODO Auto-generated method stub
+		wStatement.getExpression().accept(this, param);
 		return null;
 	}
 

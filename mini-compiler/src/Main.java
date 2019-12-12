@@ -1,9 +1,11 @@
 import parser.*;
+import semantic.IdentificationVisitor;
 import semantic.TypeCheckingVisitor;
 
 import org.antlr.v4.runtime.*;
 
 import ast.Program;
+import codegeneration.OffsetVisitor;
 import errorhandler.ErrorHandler;
 
 public class Main {
@@ -21,15 +23,22 @@ public class Main {
 		// create a parser that feeds off the tokens buffer
 		CommonTokenStream tokens = new CommonTokenStream(lexer); 
 		CmmParser parser = new CmmParser(tokens);	
-		parser.program();
 		Program ast = parser.program().ast;
 		
-		ast.accept(new TypeCheckingVisitor(),null);
+		if (parser.getNumberOfSyntaxErrors() >0) {
+			System.err.println("Program with syntax errors. No code was generated.");
+			return;
+		}
 		
+		ast.accept(new IdentificationVisitor(), null);
+		ast.accept(new TypeCheckingVisitor(), null);
+
 		if (ErrorHandler.getErrorHandler().anyError()) {
 			ErrorHandler.getErrorHandler().showErrors(System.err);
 			System.err.println("Program with semantic errors. No code was generated.");
 		}
+		
+		ast.accept(new OffsetVisitor(), null);
 	}
 	
 

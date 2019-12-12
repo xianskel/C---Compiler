@@ -42,7 +42,7 @@ public class IdentificationVisitor extends AbstractVisitor<Void, Void> {
 				+ " has already been defined", funcDefinition);
 		else {
 			st.set();
-			for(VarDefinition defintion: funcDefinition.getType().getVarDefinitions())
+			for(VarDefinition defintion: funcDefinition.getType().getVarDefs())
 				defintion.accept(this, param);
 			for(VarDefinition defintion: funcDefinition.getVarDefinitions())
 				defintion.accept(this, param);
@@ -53,16 +53,16 @@ public class IdentificationVisitor extends AbstractVisitor<Void, Void> {
 		return null;
 	}
 	
-	@Override
-	public Void visit(Return rStatement, Void param) {
-		rStatement.getExpression().accept(this, param);
-		return null;
-	}
 	
 	@Override
 	public Void visit(Read read, Void param) {
 		read.getExpression().accept(this, param);
 		return null;
 	}
-
+	
+	@Override
+	public Void visit(IfElse ifElse, Void param) {
+		super.visit(ifElse, param);
+		return null;
+	}
 }

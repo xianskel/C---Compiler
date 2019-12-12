@@ -8,6 +8,7 @@ public class VarDefinition extends AbstractASTNode implements Definition {
 	private Type type;
 	private String name;
 	private int scope;
+	private int offset;
 	
 	public VarDefinition(int line, int column, String name, Type type) {
 		super(line, column);
@@ -40,5 +41,13 @@ public class VarDefinition extends AbstractASTNode implements Definition {
 	
 	public void setScope(int scope) {
 		this.scope = scope;
+	}
+	
+	public void setOffset(int offset) {
+		this.offset = offset;
+	}
+	
+	public int getOffset() {
+		return this.offset;
 	}
 }

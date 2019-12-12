@@ -111,7 +111,7 @@ statement returns [List<Statement> ast = new ArrayList<Statement>()]:
 		 
 statementBlock returns [List<Statement> ast = new ArrayList<Statement>()]:
 	'{' statements '}' { $ast = $statements.ast; }
-	| statement	 { $ast.addAll($statement.ast); }
+	| statement { $ast.addAll($statement.ast); }
 	;
 	
 expressionList returns [List<Expression> ast = new ArrayList<Expression>()]:

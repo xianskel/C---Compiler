@@ -6,6 +6,7 @@ import parser.*;
 import semantic.IdentificationVisitor;
 import semantic.TypeCheckingVisitor;
 import ast.Program;
+import codegeneration.OffsetVisitor;
 import errorhandler.ErrorHandler;
 
 
@@ -31,14 +32,16 @@ public class MainIntrospector {
 			return;
 		}
 		
-		ast.accept(new TypeCheckingVisitor(), null);
 		ast.accept(new IdentificationVisitor(), null);
+		ast.accept(new TypeCheckingVisitor(), null);
 
 		
 		if (ErrorHandler.getErrorHandler().anyError()) {
 			ErrorHandler.getErrorHandler().showErrors(System.err);
 			System.err.println("Program with semantic errors. No code was generated.");
 		}
+		
+		ast.accept(new OffsetVisitor(), null);
 		
 	
 		// * The AST is shown

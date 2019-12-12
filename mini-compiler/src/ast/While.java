@@ -4,7 +4,7 @@ import java.util.List;
 
 import visitor.Visitor;
 
-public class While extends AbstractASTNode implements Statement {
+public class While extends AbstractExpression implements Statement {
 
 	private Expression expression;
 	private List<Statement> statements;

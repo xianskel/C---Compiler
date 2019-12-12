@@ -33,4 +33,5 @@ public class Variable extends AbstractExpression {
 	public void setDefinition(Definition definition) {
 		this.definition = definition;
 	}
+	
 }

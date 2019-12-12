@@ -1,5 +1,6 @@
 package types;
 
+import ast.ASTNode;
 import visitor.Visitor;
 
 public class ArrayType extends AbstractType {
@@ -24,7 +25,25 @@ public class ArrayType extends AbstractType {
 	
 	@Override
 	public <TP, TR> TR accept(Visitor<TP, TR> visitor, TP param) {
-		return visitor.visit(this,param);
+		return visitor.visit(this ,param);
+	}
+	
+	@Override
+	public Type squareBrackets(Type type, ASTNode node) {
+		if (type instanceof types.ErrorType)
+			return type;
+		if (type instanceof ArrayType)
+			return this;
+		return new ErrorType(String.format(
+				"Array Index operations cannot be performed on type %s",  type),
+				node);
+	}
+	
+	@Override
+	public Type assignment(Type type, ASTNode node) {
+		if (type instanceof types.ErrorType)
+			return type;
+		return this.type.assignment(type, node);
 	}
 
 }
